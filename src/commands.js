@@ -31,13 +31,6 @@ const commands = [
         ),
 
     new SlashCommandBuilder()
-        .setName('globalannounce')
-        .setDescription('Send an announcement to all managed servers')
-        .addStringOption(o =>
-            o.setName('message').setDescription('Announcement message').setRequired(true)
-        ),
-
-    new SlashCommandBuilder()
         .setName('serverstatus')
         .setDescription('View all servers managed by Axiom'),
 
