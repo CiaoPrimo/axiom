@@ -24,42 +24,6 @@ async function handleSetup(interaction) {
     await interaction.deferReply();
 
     try {
-        const category = await guild.channels.create({
-            name: '📢 Axiom - Global',
-            type: ChannelType.GuildCategory,
-            permissionOverwrites: [
-                {
-                    id:   guild.id,
-                    allow:[PermissionFlagsBits.ViewChannel],
-                    deny: [PermissionFlagsBits.SendMessages],
-                },
-                {
-                    id:   staffRole.id,
-                    allow:[
-                        PermissionFlagsBits.ViewChannel,
-                        PermissionFlagsBits.SendMessages,
-                        PermissionFlagsBits.ManageChannels,
-                        PermissionFlagsBits.ManageMessages,
-                        PermissionFlagsBits.MentionEveryone,
-                    ],
-                },
-            ],
-        });
-
-        const announcementsChannel = await guild.channels.create({
-            name:   '📢announcements',
-            type:   ChannelType.GuildAnnouncement,
-            parent: category.id,
-            topic:  'Official Axiom announcements and important updates',
-        });
-
-        const updatesChannel = await guild.channels.create({
-            name:   '🔔updates',
-            type:   ChannelType.GuildText,
-            parent: category.id,
-            topic:  'Service updates, maintenance notices, and system status',
-        });
-
         const welcomeEmbed = new EmbedBuilder()
             .setColor(0x5865F2)
             .setTitle('🎉 Axiom Setup Complete!')
@@ -67,7 +31,7 @@ async function handleSetup(interaction) {
             .addFields(
                 { name: '📢 Announcements', value: `${announcementsChannel} — Important announcements are posted here` },
                 { name: '🔔 Updates',       value: `${updatesChannel} — Service updates and notifications` },
-                { name: '🛠️ Staff Commands', value: '`/globalban` `/globalunban` `/globalannounce` `/serverstatus` `/revokeaccess`' },
+                { name: '🛠️ Staff Commands', value: '`/globalban` `/globalunban` `/serverstatus` `/revokeaccess`' },
             )
             .setFooter({ text: 'Thank you for choosing Axiom!' })
             .setTimestamp();
