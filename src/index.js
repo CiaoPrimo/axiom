@@ -18,6 +18,11 @@ const { handleEnroll, handleGuildCreate, handleEnrollmentButton } = require('./h
 const { handleSetup }                                              = require('./handlers/setup');
 const { handleGlobalBan, handleGlobalUnban, handleGlobalAnnounce } = require('./handlers/moderation');
 const { handleServerStatus, handleRevokeAccess, handleRevokeButton } = require('./handlers/management');
+const { handleRestartCommand }                                     = require('./handlers/restart');
+
+// ── Prefix commands ───────────────────────────────────────────────────────────
+
+const PREFIX = '*-!';
 
 // ── Client ────────────────────────────────────────────────────────────────────
 
@@ -26,6 +31,7 @@ const client = new Client({
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.MessageContent,
     ],
 });
 
@@ -107,6 +113,27 @@ async function routeButton(interaction) {
         default: logger.warn(`Unknown button: ${id}`);
     }
 }
+
+// ── Prefix command router ─────────────────────────────────────────────────────
+
+client.on('messageCreate', async message => {
+    if (message.author.bot) return;
+    if (!message.content.startsWith(PREFIX)) return;
+
+    const args = message.content.slice(PREFIX.length).trim().split(/\s+/);
+    const commandName = args.shift()?.toLowerCase();
+    if (!commandName) return;
+
+    try {
+        switch (commandName) {
+            case 'restart': return await handleRestartCommand(message, args);
+            default: return; // unknown prefix command, ignore silently
+        }
+    } catch (err) {
+        logger.error(`Prefix command "${commandName}" error:`, err);
+        message.reply('❌ Something went wrong running that command.').catch(() => {});
+    }
+});
 
 // ── Guild lifecycle ───────────────────────────────────────────────────────────
 
