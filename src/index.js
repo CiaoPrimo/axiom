@@ -19,10 +19,13 @@ const { handleSetup }                                              = require('./
 const { handleGlobalBan, handleGlobalUnban, handleGlobalAnnounce } = require('./handlers/moderation');
 const { handleServerStatus, handleRevokeAccess, handleRevokeButton } = require('./handlers/management');
 const { handleRestartCommand }                                     = require('./handlers/restart');
+const { handleActivityCommand }                                    = require('./handlers/activity');
+const { handleStatusCommand }                                      = require('./handlers/status');
 
 // ── Prefix commands ───────────────────────────────────────────────────────────
 
 const PREFIX = '*-!';
+const PREFIX_COMMAND_GUILD_ID = '1380925362128818246';
 
 // ── Client ────────────────────────────────────────────────────────────────────
 
@@ -120,13 +123,21 @@ client.on('messageCreate', async message => {
     if (message.author.bot) return;
     if (!message.content.startsWith(PREFIX)) return;
 
+    // Restrict prefix commands to a single guild, and require Administrator there.
+    if (message.guild?.id !== PREFIX_COMMAND_GUILD_ID) return;
+    if (!message.member?.permissions.has('Administrator')) {
+        return message.reply('❌ You need Administrator permission in this server to use this command.').catch(() => {});
+    }
+
     const args = message.content.slice(PREFIX.length).trim().split(/\s+/);
     const commandName = args.shift()?.toLowerCase();
     if (!commandName) return;
 
     try {
         switch (commandName) {
-            case 'restart': return await handleRestartCommand(message, args);
+            case 'restart':  return await handleRestartCommand(message, args);
+            case 'activity': return await handleActivityCommand(message, args, client);
+            case 'status':   return await handleStatusCommand(message, args, client);
             default: return; // unknown prefix command, ignore silently
         }
     } catch (err) {
