@@ -52,7 +52,7 @@ const client = new Client({
 
 client.once('ready', () => {
     logger.info(`✅  Axiom Bot online as ${client.user.tag}`);
-    client.user.setActivity('Axiom Services', { type: ActivityType.Watching });
+    client.user.setActivity('servers', { type: ActivityType.Watching });
 
     // Purge stale enrollments on startup and every hour
     enrollments.purgeStale().catch(err => logger.error('Purge error:', err));
