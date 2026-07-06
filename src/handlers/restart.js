@@ -7,7 +7,17 @@ async function handleRestartCommand(message) {
     const statusMsg = await message.reply('🔄 Triggering restart...');
 
     try {
-        const response = await fetch(DEPLOY_URL, { method: 'POST' });
+        const response = await fetch(DEPLOY_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-GitHub-Event': 'push',
+            },
+            body: JSON.stringify({
+                ref: 'refs/heads/main',
+                repository: { full_name: 'CiaoPrimo/axiom-bot' },
+            }),
+        });
 
         if (response.ok) {
             await statusMsg.edit('✅ Restart triggered successfully.');
