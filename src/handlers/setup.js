@@ -29,9 +29,9 @@ async function handleSetup(interaction) {
             .setTitle('🎉 Axiom Setup Complete!')
             .setDescription('Your server is now fully integrated with Axiom Services.')
             .addFields(
-                { name: '📢 Announcements', value: `${announcementsChannel} — Important announcements are posted here` },
-                { name: '🔔 Updates',       value: `${updatesChannel} — Service updates and notifications` },
-                { name: '🛠️ Staff Commands', value: '`/globalban` `/globalunban` `/serverstatus` `/revokeaccess`' },
+                { name: 'Announcements', value: `${announcementsChannel} — Important announcements are posted here` },
+                { name: 'Updates',       value: `${updatesChannel} — Service updates and notifications` },
+                { name: 'Staff Commands', value: '`/globalban` `/globalunban` `/serverstatus` `/revokeaccess`' },
             )
             .setFooter({ text: 'Thank you for choosing Axiom!' })
             .setTimestamp();
