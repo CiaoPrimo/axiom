@@ -29,10 +29,10 @@ async function handleEnroll(interaction) {
         .setTitle('📋 Axiom Services — Enrollment Agreement')
         .setDescription(`**Client:** ${targetUser.tag}\n**Initiated by:** ${interaction.user.tag}`)
         .addFields(
-            { name: '📜 Terms of Service', value: 'By proceeding you agree to Axiom\'s ToS. Axiom staff will receive administrative access to your Discord server and Roblox group.' },
-            { name: '🔒 Privacy & Security', value: 'Axiom commits to protecting your community data and will only use permissions for agreed-upon management services.' },
-            { name: '⚙️ Services Included', value: '• Discord Server Management\n• Roblox Group Administration\n• Moderation Support\n• Custom Automation\n• 24/7 Support' },
-            { name: '💼 Next Steps', value: `${targetUser}, click **Add Axiom Bot** below, authorise all permissions, then wait for staff confirmation.` },
+            { name: 'Terms of Service', value: 'By proceeding you agree to Axiom\'s ToS. Axiom staff will receive administrative access to your Discord server and Roblox group.' },
+            { name: 'Privacy & Security', value: 'Axiom commits to protecting your community data and will only use permissions for agreed-upon management services.' },
+            { name: 'Services Included', value: '• Discord Server Management\n• Roblox Group Administration\n• Moderation Support\n• Custom Automation\n• 24/7 Support' },
+            { name: 'Next Steps', value: `${targetUser}, click **Add Axiom Bot** below, authorise all permissions, then wait for staff confirmation.` },
         )
         .setFooter({ text: 'Axiom Services • axiomrblx.pages.dev' })
         .setTimestamp();
@@ -85,8 +85,8 @@ async function handleGuildCreate(guild, client) {
         .setTitle('🔐 Staff Access Request')
         .setDescription(`**Server:** ${guild.name}\n**Owner:** ${owner.user.tag}`)
         .addFields(
-            { name: '⚠️ Action Required', value: `${owner}, click **Grant Staff Access** to complete enrollment.` },
-            { name: '✅ What happens next?', value: '• An "Axiom Staff" role is created with admin permissions\n• The assigned staff member receives a one-time invite\n• You retain full ownership at all times' },
+            { name: 'Action Required', value: `${owner}, click **Grant Staff Access** to complete enrollment.` },
+            { name: 'What happens next?', value: '• An "Axiom Staff" role is created with admin permissions\n• The assigned staff member receives a one-time invite\n• You retain full ownership at all times' },
         )
         .setTimestamp();
 
@@ -199,8 +199,6 @@ async function sendGenericWelcome(guild) {
     const embed = new EmbedBuilder()
         .setColor(0x5865F2)
         .setTitle('👋 Thanks for adding Axiom!')
-        .setDescription('This server has not been enrolled yet. Visit our website to learn more.')
-        .addFields({ name: '🌐 Website', value: config.COMPANY_WEBSITE })
         .setTimestamp();
 
     try {
