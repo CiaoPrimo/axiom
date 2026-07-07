@@ -21,6 +21,8 @@ const { handleServerStatus, handleRevokeAccess, handleRevokeButton } = require('
 const { handleRestartCommand }                                     = require('./handlers/restart');
 const { handleActivityCommand }                                    = require('./handlers/activity');
 const { handleStatusCommand }                                      = require('./handlers/status');
+const broadcastCommand                                             = require('./handlers/global-announcement');
+const updateCommand                                                = require('./handlers/global-update');
 
 // ── Prefix commands ───────────────────────────────────────────────────────────
 
@@ -48,7 +50,12 @@ const client = new Client({
     const rest = new REST({ version: '10' }).setToken(config.TOKEN);
     try {
         logger.info('Registering slash commands…');
-        await rest.put(Routes.applicationCommands(config.CLIENT_ID), { body: commands });
+        const allCommands = [
+            ...commands,
+            broadcastCommand.data.toJSON(),
+            updateCommand.data.toJSON(),
+        ];
+        await rest.put(Routes.applicationCommands(config.CLIENT_ID), { body: allCommands });
         logger.info('Slash commands registered.');
     } catch (err) {
         logger.error('Failed to register commands:', err);
@@ -97,6 +104,8 @@ async function routeCommand(interaction) {
         case 'globalannounce': return handleGlobalAnnounce(interaction, client);
         case 'serverstatus':   return handleServerStatus(interaction, client);
         case 'revokeaccess':   return handleRevokeAccess(interaction);
+        case 'broadcast':      return broadcastCommand.execute(interaction);
+        case 'update':         return updateCommand.execute(interaction);
         default: logger.warn(`Unknown command: ${interaction.commandName}`);
     }
 }
