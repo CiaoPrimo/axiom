@@ -7,7 +7,7 @@ const logger = require('./utils/logger');
 
 async function deployCommands() {
     const commands = [];
-    const commandsPath = path.join(__dirname, 'commands');
+    const commandsPath = path.join(__dirname, 'handlers');
     const commandFiles = fs.readdirSync(commandsPath).filter(f => f.endsWith('.js'));
 
     for (const file of commandFiles) {
